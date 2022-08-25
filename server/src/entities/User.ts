@@ -1,7 +1,10 @@
 import { Exclude } from "class-transformer"
-import { IsEmail, Length, ValidationTypes } from "class-validator"
-import { Entity, Column, BaseEntity, Index, OneToMany, BeforeInsert } from "typeorm"
+import { IsEmail, Length } from "class-validator"
+import { Entity, Column, Index, OneToMany, BeforeInsert } from "typeorm"
 import bcrypt from "bcryptjs"
+import Post from "./Post"
+import Vote from "./Vote"
+import BaseEntity from "./Entity"
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -23,10 +26,10 @@ export class User extends BaseEntity {
     @Length(6, 255, { message: "비밀번호는 6자리 이상이어야 합니다." })
     password: string
 
-    @OneToMany(() => postMessage, (post) => post.user)
+    @OneToMany(() => Post, (post) => post.user)
     posts: Post[]
 
-    @OneToMany(() => ValidationTypes, (vote) => vote.user)
+    @OneToMany(() => Vote, (vote) => vote.user)
     votes: Vote[]
 
     @BeforeInsert()
