@@ -3,24 +3,31 @@ import InputGroup from '../components/inputGroup'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuthDispatch } from '../context/auth'
 
 const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState<any>({})
 
+    const dispatch = useAuthDispatch()
+
     let router = useRouter()
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault() // 페이지 리프레시 방지
         try {
             //백엔드에 회원가입을 위한 요청 및 회원가입 후 로그인 페이지로 이동
-            const res = await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api/auth/login', {
-                password,
-                username
-            },
+            const res = await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api/auth/login',
+                {
+                    password,
+                    username
+                },
                 {
                     withCredentials: true
-                })
+                }
+            )
+            dispatch("LOGIN", res.data?.user)
+            router.push('/')
             console.log('res', res)
             // router.push("/login")
         } catch (error: any) {
