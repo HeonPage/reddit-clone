@@ -1,5 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { User } from '../entities/User'
+import userMiddleware from '../middlewares/user'
+import authMiddleware from '../middlewares/auth'
 import jwt from "jsonwebtoken"
 const createSub = async (req: Request, res: Response, next) => {
     const { name, title, description } = req.body
@@ -10,7 +12,7 @@ const createSub = async (req: Request, res: Response, next) => {
 
     const { username }: any = jwt.verify(token, process.env.JWT_SECRET)
 
-    const user = await User.findOne({ username })
+    const user = await User.findOneBy({ username })
     // 유저 정보가 없다면 throw error 
     if (!user) throw new Error("Unauthenticated!")
     // 유저 정보가 있다면 sub 이름과 제목이 이미 있는 것인지 체크
@@ -22,6 +24,6 @@ const createSub = async (req: Request, res: Response, next) => {
 
 const router = Router()
 
-router.post("/", createSub)
+router.post("/", userMiddleware, authMiddleware, createSub)
 
 export default router
