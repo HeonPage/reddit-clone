@@ -11,14 +11,16 @@ interface State {
 const StateContext = createContext<State>({
     authenticated: false,
     user: undefined,
-    loading: true,
+    loading: true
 })
+
+const DispatchContext = createContext<any>(null)
 
 interface Action {
     type: string
     payload: any
 }
-const DispatchContext = createContext<any>(null)
+
 
 const reducer = (state: State, { type, payload }: Action) => {
     switch (type) {
@@ -44,32 +46,33 @@ const reducer = (state: State, { type, payload }: Action) => {
     }
 }
 
+
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+
     const [state, defaultDispatch] = useReducer(reducer, {
-        authenticated: false,
         user: null,
+        authenticated: false,
         loading: true
     })
-
     console.log('state', state)
-
     const dispatch = (type: string, payload?: any) => {
         defaultDispatch({ type, payload })
     }
 
-    // useEffect(() => {
-    //     async function loadUser() {
-    //         try {
-    //             const res = await axios.get("/auth/me");
-    //             dispatch("LOGIN", res.data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         } finally {
-    //             dispatch("STOP_LOADING");
-    //         }
-    //     }
-    //     loadUser();
-    // }, [])
+    useEffect(() => {
+        async function loadUser() {
+            try {
+                const res = await axios.get("/auth/me")
+                dispatch("LOGIN", res.data)
+            } catch (error) {
+                console.log(error)
+            } finally {
+                dispatch("STOP_LOADING")
+            }
+        }
+        loadUser()
+    }, [])
 
     return (
         <DispatchContext.Provider value={dispatch}>
@@ -78,5 +81,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-export const useAuthState = () => useContext(StateContext);
-export const useAuthDispatch = () => useContext(DispatchContext);
+export const useAuthState = () => useContext(StateContext)
+export const useAuthDispatch = () => useContext(DispatchContext)

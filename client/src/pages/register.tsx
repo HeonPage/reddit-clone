@@ -3,14 +3,18 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FormEvent, useState } from 'react'
 import InputGroup from '../components/InputGroup'
+import { useAuthState } from '../context/auth'
 
 const Register = () => {
+    const router = useRouter()
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState<any>({})
+    const { authenticated } = useAuthState()
 
-    let router = useRouter()
+    if (authenticated) router.push('/')
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault() // 페이지 리프레시 방지
         try {

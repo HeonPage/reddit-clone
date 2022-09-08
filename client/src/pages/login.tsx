@@ -1,49 +1,42 @@
 import React, { FormEvent, useState } from 'react'
-import axios from 'axios'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useAuthDispatch } from '../context/auth'
 import InputGroup from '../components/InputGroup'
+import Link from 'next/link'
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useAuthDispatch, useAuthState } from '../context/auth';
 
 const Login = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [errors, setErrors] = useState<any>({})
+    let router = useRouter();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState<any>({});
+    const { authenticated } = useAuthState();
+    const dispatch = useAuthDispatch();
 
-    const dispatch = useAuthDispatch()
+    if (authenticated) router.push("/");
 
-    let router = useRouter()
     const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault() // 페이지 리프레시 방지
+        event.preventDefault();
         try {
-            //백엔드에 회원가입을 위한 요청 및 회원가입 후 로그인 페이지로 이동
-            const res = await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api/auth/login',
-                {
-                    password,
-                    username
-                },
-                {
-                    withCredentials: true
-                }
-            )
-            dispatch("LOGIN", res.data?.user)
-            router.push('/')
-            console.log('res', res)
-            // router.push("/login")
+            const res = await axios.post("/auth/login", { password, username }, { withCredentials: true })
+
+            dispatch("LOGIN", res.data?.user);
+
+            router.push("/")
         } catch (error: any) {
-            console.log('error', error)
-            setErrors(error.response.data || {})
+            console.log(error);
+            setErrors(error.response?.data || {})
         }
     }
 
     return (
         <div className='bg-white'>
             <div className='flex flex-col items-center justify-center h-screen p-6'>
-                <div className='w-10/12 mx-aut md:w-96'>
+                <div className='w-10/12 mx-auto md:w-96'>
                     <h1 className='mb-2 text-lg font-medium'>로그인</h1>
                     <form onSubmit={handleSubmit}>
                         <InputGroup
-                            placeholder='UserName'
+                            placeholder='Username'
                             value={username}
                             setValue={setUsername}
                             error={errors.username}
@@ -61,9 +54,7 @@ const Login = () => {
                     <small>
                         아직 아이디가 없나요?
                         <Link href="/register">
-                            <a className='ml-1 text-blue-500 uppercase'>
-                                회원가입
-                            </a>
+                            <a className='ml-1 text-blue-500 uppercase'>회원가입</a>
                         </Link>
                     </small>
                 </div>
