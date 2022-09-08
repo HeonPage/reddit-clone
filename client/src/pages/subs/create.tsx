@@ -2,7 +2,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import InputGroup from "../../components/inputGroup"
+import InputGroup from "../../components/InputGroup"
 
 const SubCreate = () => {
     const [name, setName] = useState("");
@@ -15,7 +15,7 @@ const SubCreate = () => {
         event.preventDefault();
 
         try {
-            const res = await axios.post("/subs", { name, title, description })
+            const res = await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api/subs', { name, title, description })
 
             router.push(`/r/${res.data.name}`);
         } catch (error: any) {

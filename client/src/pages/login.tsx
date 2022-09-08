@@ -3,7 +3,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuthDispatch } from '../context/auth'
-import InputGroup from '../components/inputGroup'
+import InputGroup from '../components/InputGroup'
 
 const Login = () => {
     const [username, setUsername] = useState("")
