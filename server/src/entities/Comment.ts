@@ -1,10 +1,10 @@
-import { Exclude, Expose } from "class-transformer";
-import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
-import { makeId } from "../utils/helpers";
-import BaseEntity from "./Entity";
-import Post from "./Post";
-import { User } from "./User";
-import Vote from "./Vote";
+import { Exclude, Expose } from "class-transformer"
+import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm"
+import { makeId } from "../utils/helpers"
+import BaseEntity from "./Entity"
+import Post from "./Post"
+import { User } from "./User"
+import Vote from "./Vote"
 @Entity("comments")
 export default class extends BaseEntity {
     @Index()

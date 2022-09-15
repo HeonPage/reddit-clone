@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         authenticated: false,
         loading: true
     })
-    console.log('state', state)
     const dispatch = (type: string, payload?: any) => {
         defaultDispatch({ type, payload })
     }
@@ -74,6 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         loadUser()
     }, [])
 
+    console.log('state', state)
     return (
         <DispatchContext.Provider value={dispatch}>
             <StateContext.Provider value={state}>{children}</StateContext.Provider>
