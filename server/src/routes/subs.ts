@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express'
+import { NextFunction, Request, Response, Router } from 'express'
 import { User } from '../entities/User'
 import userMiddleware from '../middlewares/user'
 import authMiddleware from '../middlewares/auth'
@@ -7,6 +7,24 @@ import { isEmpty } from 'class-validator'
 import { AppDataSource } from '../data-source'
 import Sub from '../entities/Sub'
 import Post from '../entities/Post'
+import multer, { FileFilterCallback } from 'multer'
+import path from 'path'
+import { Any } from 'typeorm'
+import { makeId } from '../utils/helpers'
+
+
+const getSub = async (req: Request, res: Response) => {
+  const name = req.params.name
+  try {
+    const sub = await Sub.findOneByOrFail({ name })
+    return res.json(sub)
+  } catch (error) {
+    return res.status(404).json({ error: "커뮤니티를 찾을 수 없습니다." })
+
+  }
+}
+
+
 const createSub = async (req: Request, res: Response, next) => {
   const { name, title, description } = req.body
 
@@ -79,8 +97,55 @@ const topSubs = async (req: Request, res: Response) => {
   }
 }
 
+const ownSub = async (req: Request, res: Response, next: NextFunction) => {
+  const user: User = res.locals.user
+  try {
+    const sub = await Sub.findOneOrFail({ where: { name: req.params.name } })
+
+    if (sub.username !== user.username) {
+      return res.status(403).json({ error: "이 커뮤니티를 소유하고 있지 않습니다" })
+    }
+    res.locals.sub = sub
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ error: "문제가 발생했습니다" })
+
+  }
+
+  const upload = multer({
+    storage: multer.diskStorage({
+      destination: "public/images",
+      filename: (_, file, callback) => {
+        const name = makeId(15)
+        callback(null, name + path.extname(file.originalname))
+      }
+    }),
+    fileFilter: (_, file: any, callback: FileFilterCallback) => {
+      if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+        callback(null, true)
+      } else {
+        callback(new Error("이미지가 아닙니다"))
+      }
+    }
+  })
+
+
+}
+
+
+
 const router = Router()
 
+router.get("/:name", userMiddleware, getSub)
 router.post("/", userMiddleware, authMiddleware, createSub)
 router.get("/sub/topSubs", topSubs)
+router.post(
+  "/:name/upload",
+  userMiddleware,
+  authMiddleware,
+  ownSub,
+  upload.single("file"),
+  uploadImage
+)
 export default router
