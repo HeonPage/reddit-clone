@@ -13,18 +13,18 @@ export let slugify = function (str) {
         .replace(/\s+/g, '-') // collapse whitespace and replace by -
         .replace(/-+/g, '-') // collapse dashes
 
-    return str;
+    return str
 }
 
 export function makeId(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
+    var result = ''
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    var charactersLength = characters.length
     for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() *
-            charactersLength));
+            charactersLength))
     }
-    return result;
+    return result
 }
 
-console.log(makeId(5));
+console.log(makeId(5))

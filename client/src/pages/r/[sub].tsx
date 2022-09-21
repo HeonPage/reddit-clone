@@ -22,38 +22,38 @@ const SubPage = () => {
     const router = useRouter()
     const subName = router.query.sub
     const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null, fetcher)
+    useEffect(() => {
+        if (!sub || !user) return
+        setOwnSub(authenticated && user.username === sub.username)
+    }, [sub])
+    console.log('sub', sub)
     const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files === null) return
+
         const file = event.target.files[0]
         console.log('file', file)
+
         const formData = new FormData()
         formData.append("file", file)
         formData.append("type", fileInputRef.current!.name)
 
         try {
-            await axios.post(`/subs/${sub.name}/upload`, {
-                headers: { "Context-Type": "multipart/form-data" },
+            await axios.post(`/subs/${sub.name}/upload`, formData, {
+                headers: { "Context-Type": "multipart/form-data" }
             })
-        } catch (error: any) {
+        } catch (error) {
             console.log(error)
         }
     }
 
     const openFileInput = (type: string) => {
+
         const fileInput = fileInputRef.current
         if (fileInput) {
             fileInput.name = type
             fileInput.click()
         }
     }
-    useEffect(() => {
-        if (!sub || !user)
-            return () => {
-            }
-        setOwnSub(authenticated && user.username === sub.username)
-    }, [sub])
-
-    console.log('sub', sub)
     return (
         <>
             {sub &&
