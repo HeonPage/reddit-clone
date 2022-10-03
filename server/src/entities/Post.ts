@@ -60,8 +60,8 @@ export default class Post extends BaseEntity {
     protected userVote: number
 
     setUserVote(user: User) {
-        const index = this.votes?.findIndex(v => v.username === user.username)
-        this.userVote = index - 1 ? this.votes[index].value : 0
+        const index = this.votes?.findIndex(v => v.username === user.username);
+        this.userVote = index > -1 ? this.votes[index].value : 0;
     }
 
     @BeforeInsert()

@@ -30,7 +30,7 @@ export interface Post {
     username: string
     createdAt: string
     updatedAt: string
-    sub?: Sub
+    sub: Sub
 
     url: string
     userVote?: number
