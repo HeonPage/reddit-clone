@@ -34,7 +34,7 @@ const PostCreate = () => {
                 <div className='p-4 bg-white rounded'>
                     <h1 className='mb-3 text-lg'>포스트 생성하기</h1>
                     <form onSubmit={submitPost}>
-                        <div className='relative'>
+                        <div className='mb-3 relative'>
                             <input
                                 type="text"
                                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'

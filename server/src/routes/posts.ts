@@ -73,7 +73,6 @@ const createPost = async (req: Request, res: Response) => {
     }
 }
 const getPostComments = async (req: Request, res: Response) => {
-    console.log('232323')
     const { identifier, slug } = req.params
     try {
         const post = await Post.findOneByOrFail({ identifier, slug })

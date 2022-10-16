@@ -3,7 +3,7 @@ import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany }
 import { makeId, slugify } from "../utils/helpers"
 import BaseEntity from './Entity'
 import Sub from "./Sub"
-import { User } from "./User"
+import User from "./User"
 import Vote from "./Vote"
 import Comment from "./Comment"
 
@@ -53,7 +53,7 @@ export default class Post extends BaseEntity {
         return this.comments?.length
     }
 
-    @Expose() get VoteScore(): number {
+    @Expose() get voteScore(): number {
         return this.votes?.reduce((memo, curt) => memo + (curt.value || 0), 0)
     }
 

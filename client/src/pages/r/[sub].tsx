@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
+import PostCard from '../../components/PostCard'
 import SideBar from '../../components/SideBar'
 import { useAuthState } from '../../context/auth'
 import { Post } from '../../types'
@@ -48,8 +49,16 @@ const SubPage = () => {
         }
     }
 
-
     let renderPosts;
+    if (!sub) {
+        renderPosts = <p className='text-lg text-center'>로딩중...</p>
+    } else if (sub.posts.length === 0) {
+        renderPosts = <p className='text-lg text-center'>작성된 포스트가 없습니다.</p>
+    } else {
+        renderPosts = sub.posts.map((post: Post) => (
+            <PostCard key={post.identifier} post={post} />
+        ))
+    }
     // if (!sub) {
     //     renderPosts = <p className="text-lg text-center">로딩중...</p>
     // } else if (sub.posts.length === 0) {
