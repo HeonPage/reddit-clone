@@ -43,7 +43,7 @@ const PostCard = ({ post: {
             </div>
             {/* 포스트 데이터 부분 */}
             <div className='w-full p-2'>
-                {/* <div className='flex items-center'>
+                <div className='flex items-center'>
                     <Link href={`/r/${subName}`}>
                         <a>
                             <Image
@@ -74,7 +74,7 @@ const PostCard = ({ post: {
                             </a>
                         </Link>
                     </p>
-                </div> */}
+                </div>
                 <Link href={url}>
                     <a className='my-1 text-lg font-medium'>{title}</a>
                 </Link>
