@@ -15,7 +15,7 @@ const SubPage = () => {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
     const subName = router.query.sub
-    const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null)
+    const { data: sub, error, mutate: subMutate } = useSWR(subName ? `/subs/${subName}` : null)
     useEffect(() => {
         if (!sub || !user) return
         setOwnSub(authenticated && user.username === sub.username)
@@ -56,7 +56,7 @@ const SubPage = () => {
         renderPosts = <p className='text-lg text-center'>작성된 포스트가 없습니다.</p>
     } else {
         renderPosts = sub.posts.map((post: Post) => (
-            <PostCard key={post.identifier} post={post} />
+            <PostCard key={post.identifier} post={post} subMutate={subMutate} />
         ))
     }
     // if (!sub) {
