@@ -16,7 +16,7 @@ const PostPage = () => {
     const { authenticated, user } = useAuthState()
     const [newComment, setNewComment] = useState("")
 
-    const { data: post, error, mutate: postMutate } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
+    const { data: post, error, mutate: postMutate } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null)
     const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(identifier && slug ? `/posts/${identifier}/${slug}/comments` : null)
 
     console.log('post', post)
@@ -126,7 +126,7 @@ const PostPage = () => {
                                 </div>
                             </div>
                             {/* 댓글 작성 공간  */}
-                            <div className='pr-6 mb-4'>
+                            <div className='pr-6 mb-4 pl-9'>
                                 {authenticated
                                     ? (
                                         <div>

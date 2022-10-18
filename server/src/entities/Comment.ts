@@ -3,7 +3,7 @@ import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany }
 import { makeId } from "../utils/helpers"
 import BaseEntity from "./Entity"
 import Post from "./Post"
-import User from "./User"
+import { User } from "./User"
 import Vote from "./Vote"
 @Entity("comments")
 export default class extends BaseEntity {
@@ -13,6 +13,7 @@ export default class extends BaseEntity {
 
     @Column()
     body: string
+
     @Column()
     username: string
 

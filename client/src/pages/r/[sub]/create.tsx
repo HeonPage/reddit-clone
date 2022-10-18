@@ -47,7 +47,7 @@ const PostCreate = () => {
                                 style={{ top: 10, right: 10 }}
                                 className="absolute mb-2 text-sm text-gray-400 select-none"
                             >
-                                /20
+                                {title.trim().length}/20
                             </div>
                         </div>
                         <textarea

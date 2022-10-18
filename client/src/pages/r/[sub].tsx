@@ -49,7 +49,7 @@ const SubPage = () => {
         }
     }
 
-    let renderPosts;
+    let renderPosts
     if (!sub) {
         renderPosts = <p className='text-lg text-center'>로딩중...</p>
     } else if (sub.posts.length === 0) {

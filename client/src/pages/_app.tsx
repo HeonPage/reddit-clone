@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api"
   Axios.defaults.withCredentials = true
 
-  const { pathname } = useRouter();
+  const { pathname } = useRouter()
   const autheRoutes = ["/register", "/login"]
   const authRoute = autheRoutes.includes(pathname)
 
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SWRConfig value={{ fetcher }}>
         <AuthProvider>
           {!authRoute && <NavBar />}
-          <div className={authRoute ? "" : "pt-16"}>
+          <div className={authRoute ? "" : "pt-12 bg-gray-200 min-h-screen"}>
             <Component {...pageProps} />
 
           </div>
