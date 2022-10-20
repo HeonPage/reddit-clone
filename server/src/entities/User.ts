@@ -7,7 +7,7 @@ import Vote from "./Vote"
 import BaseEntity from "./Entity"
 
 @Entity("users")
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
 
     @Index()
     @IsEmail(undefined, { message: "이메일 주소가 잘못되었습니다." })
