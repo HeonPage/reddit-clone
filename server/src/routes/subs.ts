@@ -4,7 +4,7 @@ import authMiddleware from '../middlewares/auth'
 import jwt from "jsonwebtoken"
 import { isEmpty } from 'class-validator'
 import { AppDataSource } from '../data-source'
-import { User } from '../entities/User'
+import User from '../entities/User'
 import Sub from '../entities/Sub'
 import Post from '../entities/Post'
 import multer, { FileFilterCallback } from 'multer'

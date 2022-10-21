@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express"
-import { User } from "../entities/User"
+import User from "../entities/User"
 import userMiddleware from "../middlewares/user"
 import Post from "../entities/Post"
 import Comment from "../entities/Comment"

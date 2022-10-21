@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express"
 import userMiddleware from '../middlewares/user'
 import authMiddleware from '../middlewares/auth'
 import Post from "../entities/Post"
-import { User } from "../entities/User"
+import User from "../entities/User"
 import Vote from "../entities/Vote"
 import Comment from "../entities/Comment"
 
