@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: "reddit-server",
+        name: "heonpage-server",
         script: "npm run start:prod"
     }]
 }
