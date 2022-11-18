@@ -115,7 +115,7 @@ const Home: NextPage = () => {
           {authenticated &&
             <div className='w-full py-6 text-center'>
               <Link href="/subs/create">
-                <a className='w-full p2- text-center text-white bg-gray-400 rounded'>
+                <a className='w-full p-2 text-center text-white bg-gray-400 rounded'>
                   커뮤니티 만들기
                 </a>
               </Link>

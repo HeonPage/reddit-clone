@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/tailwind.css'
 import type { AppProps } from 'next/app'
 import Axios from 'axios'
 import { AuthProvider } from '../context/auth'

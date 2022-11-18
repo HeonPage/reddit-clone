@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import useSWR from 'swr'
-import PostCard from '../../components/PostCard'
+import PostCard from '../../components copy/PostCard'
 import { Comment, Post } from '../../types'
 
 const UserPage = () => {
